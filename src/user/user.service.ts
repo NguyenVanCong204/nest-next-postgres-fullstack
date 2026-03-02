@@ -49,37 +49,20 @@ export class UserService {
   }
 
   async update(id: number, data: UpdateUserDto) {
-    try {
-      const user = await this.prisma.user.update({
-        where: { id },
-        data,
-      });
+    const user = await this.prisma.user.update({
+      where: { id },
+      data,
+    });
 
-      return {
-        message: 'Cập nhật thành công',
-        data: user,
-      };
-    } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException('User không tồn tại');
-      }
-      throw error;
-    }
+    return {
+      message: 'Cập nhật thành công',
+      data: user,
+    };
   }
 
   async remove(id: number) {
-    try {
-      const user = await this.prisma.user.delete({
-        where: { id },
-      });
-      return {
-        message: 'Xóa user thành công',
-      };
-    } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException('User không tồn tại');
-      }
-      throw error;
-    }
+    return this.prisma.user.delete({
+      where: { id },
+    });
   }
 }
