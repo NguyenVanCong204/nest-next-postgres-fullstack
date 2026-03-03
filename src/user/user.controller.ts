@@ -12,9 +12,13 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Role } from '@prisma/client';
 
 @Controller('users')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+@Roles(Role.ADMIN)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

@@ -33,7 +33,7 @@ export class AuthService {
       throw new UnauthorizedException('Email hoặc mật khẩu không đúng');
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email, role: user.role };
 
     return {
       message: 'Đăng nhập thành công',
@@ -50,6 +50,7 @@ export class AuthService {
         email,
         ...rest,
         password: hashedPassword,
+        role: 'USER',
       },
     });
 
