@@ -24,8 +24,4 @@ export class CreateProductDto {
   @Min(0)
   @Max(1000000)
   price: number;
-
-  @Type(() => Number)
-  @IsInt()
-  userId: number;
 }
