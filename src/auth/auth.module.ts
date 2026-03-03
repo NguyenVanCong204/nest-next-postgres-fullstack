@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtStrategy } from './jwt.strategy';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Module({
   imports: [
