@@ -9,9 +9,17 @@ import { ProfileModule } from './profile/profile.module';
 import { ProductController } from './product/product.controller';
 import { ProductService } from './product/product.service';
 import { ProductModule } from './product/product.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
-  imports: [UserModule, AuthModule, PrismaModule, ProfileModule, ProductModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    PrismaModule,
+    ProfileModule,
+    ProductModule,
+    ScheduleModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

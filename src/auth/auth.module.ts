@@ -4,17 +4,17 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtStrategy } from './jwt.strategy';
 import { PrismaModule } from 'src/prisma/prisma.module';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { TokenCleanupService } from './token-cleanup.service';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: 'van-cong',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
     PrismaModule,
   ],
-  providers: [AuthService, jwtStrategy],
+  providers: [AuthService, jwtStrategy, TokenCleanupService],
   controllers: [AuthController],
 })
 export class AuthModule {}
