@@ -6,6 +6,8 @@ import {
   Param,
   Post,
   Put,
+  Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -23,22 +25,31 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  create(@Body() createProductDto: CreateProductDto, @Req() req: any) {
+    return this.productService.create(createProductDto, req.user.userId);
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query('page') page = '1', @Query('limit') limit = '5') {
+    return this.productService.findAll(Number(page), Number(limit));
+  }
+
+  @Get('search')
+  Search(
+    @Query('name') name: string,
+    @Query('min') min: string,
+    @Query('max') max: string,
+  ) {
+    return this.productService.Search(name, Number(min), Number(max));
   }
 
   @Post(':id')
-  update(@Param('id') id: String, @Body() updateProductDto: UpdateProductDto) {
+  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(Number(id), updateProductDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: String) {
+  findOne(@Param('id') id: string) {
     return this.productService.findOne(Number(id));
   }
 
